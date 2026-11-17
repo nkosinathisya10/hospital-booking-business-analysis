@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Defs_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collab_1">
+    <bpmn:participant id="Pool_1" name="Midlands Community Clinic: booked clinic visit (to-be)" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Patient" name="Patient">
+        <bpmn:flowNodeRef>Start_Need</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gw_Channel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BookOnline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Arrive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Seen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Portal" name="Booking portal">
+        <bpmn:flowNodeRef>Gw_Merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Confirm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SMS</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Timer_DayBefore</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Reminder</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reception" name="Reception clerk">
+        <bpmn:flowNodeRef>Task_Assisted</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Folders</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckIn</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Nurse" name="Nurse">
+        <bpmn:flowNodeRef>Task_Triage</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Consult</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_FollowUp</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Need" name="Patient needs a clinic visit">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gw_Channel" name="Books online?">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_BookOnline" name="Choose branch, service and time slot">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Assisted" name="Book on patient's behalf">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gw_Merge">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Confirm" name="Check capacity and confirm booking">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_SMS" name="Send SMS confirmation">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:intermediateCatchEvent id="Timer_DayBefore" name="Day before visit, 15:00">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerDef_Timer_DayBefore" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Task_Reminder" name="Send reminder SMS and expected-patient list">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Folders" name="Prepare folders for tomorrow's patients">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Arrive" name="Arrive at booked time">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_CheckIn" name="Check in patient">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Triage" name="Check vitals and triage">
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Consult" name="Consult and treat">
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_FollowUp" name="Book follow-up visit in the system">
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Seen" name="Patient leaves with follow-up booked">
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Need" targetRef="Gw_Channel" />
+    <bpmn:sequenceFlow id="Flow_2" name="Yes" sourceRef="Gw_Channel" targetRef="Task_BookOnline" />
+    <bpmn:sequenceFlow id="Flow_3" name="No" sourceRef="Gw_Channel" targetRef="Task_Assisted" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_BookOnline" targetRef="Gw_Merge" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_Assisted" targetRef="Gw_Merge" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Gw_Merge" targetRef="Task_Confirm" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Confirm" targetRef="Task_SMS" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_SMS" targetRef="Timer_DayBefore" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Timer_DayBefore" targetRef="Task_Reminder" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_Reminder" targetRef="Task_Folders" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_Folders" targetRef="Task_Arrive" />
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Task_Arrive" targetRef="Task_CheckIn" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Task_CheckIn" targetRef="Task_Triage" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_Triage" targetRef="Task_Consult" />
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Consult" targetRef="Task_FollowUp" />
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Task_FollowUp" targetRef="End_Seen" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_1">
+      <bpmndi:BPMNShape id="Pool_1_di" bpmnElement="Pool_1" isHorizontal="true"><dc:Bounds x="100" y="60" width="2350" height="800" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Patient_di" bpmnElement="Lane_Patient" isHorizontal="true"><dc:Bounds x="130" y="60" width="2320" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Portal_di" bpmnElement="Lane_Portal" isHorizontal="true"><dc:Bounds x="130" y="260" width="2320" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Reception_di" bpmnElement="Lane_Reception" isHorizontal="true"><dc:Bounds x="130" y="460" width="2320" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Nurse_di" bpmnElement="Lane_Nurse" isHorizontal="true"><dc:Bounds x="130" y="660" width="2320" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Need_di" bpmnElement="Start_Need" bioc:stroke="#0B3C5D" bioc:fill="#0F766E" color:background-color="#0F766E" color:border-color="#0B3C5D"><dc:Bounds x="182" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="145" y="184" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Channel_di" bpmnElement="Gw_Channel" isMarkerVisible="true" bioc:stroke="#0B3C5D" bioc:fill="#FFFFFF" color:background-color="#FFFFFF" color:border-color="#0B3C5D"><dc:Bounds x="325" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="295" y="101" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BookOnline_di" bpmnElement="Task_BookOnline" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="445" y="120" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Assisted_di" bpmnElement="Task_Assisted" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="445" y="520" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Merge_di" bpmnElement="Gw_Merge" isMarkerVisible="true" bioc:stroke="#0B3C5D" bioc:fill="#FFFFFF" color:background-color="#FFFFFF" color:border-color="#0B3C5D"><dc:Bounds x="625" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Confirm_di" bpmnElement="Task_Confirm" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="745" y="320" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SMS_di" bpmnElement="Task_SMS" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="895" y="320" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Timer_DayBefore_di" bpmnElement="Timer_DayBefore" bioc:stroke="#B7791F" bioc:fill="#FFFFFF" color:background-color="#FFFFFF" color:border-color="#B7791F"><dc:Bounds x="1082" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1045" y="384" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Reminder_di" bpmnElement="Task_Reminder" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="1195" y="320" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Folders_di" bpmnElement="Task_Folders" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="1345" y="520" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Arrive_di" bpmnElement="Task_Arrive" bioc:stroke="#0F766E" bioc:fill="#D5F0EC" color:background-color="#D5F0EC" color:border-color="#0F766E"><dc:Bounds x="1495" y="120" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheckIn_di" bpmnElement="Task_CheckIn" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="1645" y="520" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Triage_di" bpmnElement="Task_Triage" bioc:stroke="#0F766E" bioc:fill="#D5F0EC" color:background-color="#D5F0EC" color:border-color="#0F766E"><dc:Bounds x="1795" y="720" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Consult_di" bpmnElement="Task_Consult" bioc:stroke="#0F766E" bioc:fill="#D5F0EC" color:background-color="#D5F0EC" color:border-color="#0F766E"><dc:Bounds x="1945" y="720" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_FollowUp_di" bpmnElement="Task_FollowUp" bioc:stroke="#B7791F" bioc:fill="#FDF1DC" color:background-color="#FDF1DC" color:border-color="#B7791F"><dc:Bounds x="2095" y="720" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Seen_di" bpmnElement="End_Seen" bioc:stroke="#0B3C5D" bioc:fill="#0B3C5D" color:background-color="#0B3C5D" color:border-color="#0B3C5D"><dc:Bounds x="2282" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2245" y="184" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="218" y="160" />
+        <di:waypoint x="325" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="375" y="160" />
+        <di:waypoint x="445" y="160" />
+        <bpmndi:BPMNLabel><dc:Bounds x="379" y="140" width="22" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="350" y="185" />
+        <di:waypoint x="350" y="560" />
+        <di:waypoint x="445" y="560" />
+        <bpmndi:BPMNLabel><dc:Bounds x="354" y="193" width="22" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="555" y="160" />
+        <di:waypoint x="650" y="160" />
+        <di:waypoint x="650" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="555" y="560" />
+        <di:waypoint x="650" y="560" />
+        <di:waypoint x="650" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="675" y="360" />
+        <di:waypoint x="745" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="855" y="360" />
+        <di:waypoint x="895" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1005" y="360" />
+        <di:waypoint x="1082" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1118" y="360" />
+        <di:waypoint x="1195" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1305" y="360" />
+        <di:waypoint x="1325" y="360" />
+        <di:waypoint x="1325" y="560" />
+        <di:waypoint x="1345" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1455" y="560" />
+        <di:waypoint x="1475" y="560" />
+        <di:waypoint x="1475" y="160" />
+        <di:waypoint x="1495" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="1605" y="160" />
+        <di:waypoint x="1625" y="160" />
+        <di:waypoint x="1625" y="560" />
+        <di:waypoint x="1645" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="1755" y="560" />
+        <di:waypoint x="1775" y="560" />
+        <di:waypoint x="1775" y="760" />
+        <di:waypoint x="1795" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14">
+        <di:waypoint x="1905" y="760" />
+        <di:waypoint x="1945" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15_di" bpmnElement="Flow_15">
+        <di:waypoint x="2055" y="760" />
+        <di:waypoint x="2095" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16_di" bpmnElement="Flow_16">
+        <di:waypoint x="2205" y="760" />
+        <di:waypoint x="2244" y="760" />
+        <di:waypoint x="2244" y="160" />
+        <di:waypoint x="2282" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
