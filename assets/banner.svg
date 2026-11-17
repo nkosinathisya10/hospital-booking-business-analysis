@@ -15,7 +15,7 @@
   <text x="64" y="78" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#9FDCD3">BUSINESS ANALYSIS CASE STUDY</text>
   <text x="64" y="138" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">Midlands Community Clinic</text>
   <text x="64" y="186" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" fill="#FFFFFF" opacity="0.92">Online Booking Portal</text>
-  <rect x="64" y="216" width="250" height="38" rx="19" fill="#E8A33D"/>
-  <text x="189" y="241" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#0B3C5D">Phase 1 · Discovery</text>
-  <text x="340" y="241" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#D5F0EC">Scottsville  ·  Edendale  ·  Imbali   |   Pietermaritzburg, KwaZulu-Natal</text>
+  <rect x="64" y="216" width="330" height="38" rx="19" fill="#E8A33D"/>
+  <text x="229" y="241" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#0B3C5D">Discovery + Requirements</text>
+  <text x="420" y="241" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#D5F0EC">Scottsville  ·  Edendale  ·  Imbali   |   Pietermaritzburg, KwaZulu-Natal</text>
 </svg>
