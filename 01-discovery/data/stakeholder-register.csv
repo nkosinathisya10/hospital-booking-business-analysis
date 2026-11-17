@@ -1,0 +1,15 @@
+ID,Stakeholder,Role,Main interest,Influence,Interest,Attitude,Engagement approach
+S01,Zanele Mthethwa,"Clinic Operations Manager, project sponsor","Shorter queues, fewer complaints, better use of staff",High,High,Champion,Manage closely
+S02,Sisters-in-charge (3),Lead nurse at each branch,Predictable daily workload; walk-ins and emergencies still seen,High,High,"Supportive, with concerns",Manage closely
+S03,Professional nurses (14),"Triage, consultation and treatment",Less pressure at peak times; no extra admin,Medium,High,Neutral,Manage closely
+S04,Reception clerks (5),Patient registration and folders,Fewer arguments at the counter; easier folder handling,Medium,High,Supportive,Manage closely
+S05,Queue marshals (4),Gate control and numbered cards,Safer and calmer mornings at the gate,Low,Medium,Neutral,Keep informed
+S06,Patients,Use clinic services,Know they will be seen; spend less time and money,Medium,High,Very supportive,Manage closely
+S07,Older and chronic patients,Monthly check-ups and medication,Avoid early travel and long standing,Low,High,Supportive but unsure about technology,Keep informed
+S08,Patients with disabilities,Including screen reader and low-vision users,"Book independently, without needing help",Low,High,Supportive if accessible,Keep informed
+S09,Caregivers and parents,Book for children and older relatives,Book for more than one person,Low,High,Supportive,Keep informed
+S10,District information officer,uMgungundlovu District Health,"Data security, hosting standards, reporting",High,Medium,Cautious,Keep satisfied
+S11,Clinic committee and ward councillors,Community oversight,Fair access for the whole community,Medium,Medium,Supportive,Manage closely
+S12,Community health workers,Home visits in the clinic's area,Book visits for patients they support,Low,Medium,Supportive,Monitor
+S13,Information Officer (POPIA),Personal information compliance,Lawful processing of health information,High,Low,Neutral,Keep satisfied
+S14,Future delivery team,UX/UI designer and developers,"Clear, testable requirements",Medium,Medium,Not yet engaged,Monitor

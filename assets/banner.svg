@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B3C5D"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="300" rx="18" fill="url(#bg)"/>
+  <circle cx="1150" cy="40" r="170" fill="#FFFFFF" opacity="0.05"/>
+  <circle cx="1210" cy="270" r="120" fill="#FFFFFF" opacity="0.05"/>
+  <g transform="translate(1040,95)">
+    <rect x="35" y="0" width="40" height="110" rx="8" fill="#E8A33D"/>
+    <rect x="0" y="35" width="110" height="40" rx="8" fill="#E8A33D"/>
+  </g>
+  <text x="64" y="78" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#9FDCD3">BUSINESS ANALYSIS CASE STUDY</text>
+  <text x="64" y="138" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">Midlands Community Clinic</text>
+  <text x="64" y="186" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" fill="#FFFFFF" opacity="0.92">Online Booking Portal</text>
+  <rect x="64" y="216" width="250" height="38" rx="19" fill="#E8A33D"/>
+  <text x="189" y="241" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#0B3C5D">Phase 1 · Discovery</text>
+  <text x="340" y="241" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#D5F0EC">Scottsville  ·  Edendale  ·  Imbali   |   Pietermaritzburg, KwaZulu-Natal</text>
+</svg>
